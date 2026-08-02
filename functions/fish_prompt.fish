@@ -14,14 +14,6 @@ function fish_prompt
     set color_git_detached red
     set color_git_accent cyan
 
-    # Configuration
-    if test -z "$theme_no_git_indicator"
-        set -g theme_no_git_indicator no
-    end
-    if test -z "$theme_short_path"
-        set -g theme_short_path no
-    end
-
     # User
     if fish_is_root_user
         set color_user $color_user_root
@@ -39,15 +31,11 @@ function fish_prompt
     echo -ns $color_host (hostname) $color_secondary " "
 
     # Directory
-    if test "$theme_short_path" = yes
-        set -g fish_prompt_pwd_dir_length 1
-    else
-        set -g fish_prompt_pwd_dir_length 0
-    end
+    set -g fish_prompt_pwd_dir_length 0
     echo -ns $color_directory (prompt_pwd)
 
     # Git status
-    if not test "$theme_no_git_indicator" = yes
+    if test -z "$theme_no_git"
         set -g __fish_git_prompt_show_informative_status yes
         set -g __fish_git_prompt_showdirtystate yes
         set -g __fish_git_prompt_showuntrackedfiles yes
