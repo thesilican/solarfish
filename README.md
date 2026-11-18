@@ -28,4 +28,7 @@ Add configuration changes to your `~/.config/fish/config.fish` file.
 ```sh
 # Disable the git indicator
 set -g theme_no_git yes
+
+# Disable the git indicator in specific directories (and their subdirectories)
+set -g theme_no_git_dirs ~/large-repo /mnt/slow-share
 ```

@@ -35,7 +35,19 @@ function fish_prompt
     echo -ns $color_directory (prompt_pwd)
 
     # Git status
-    if test -z "$theme_no_git"
+    set -l show_git yes
+    if test -n "$theme_no_git"
+        set show_git
+    end
+    for dir in $theme_no_git_dirs
+        # Match the directory itself or anything beneath it
+        set dir (string trim --right --chars=/ -- $dir)
+        if string match -qr -- '^'(string escape --style=regex -- $dir)'(/|$)' $PWD
+            set show_git
+            break
+        end
+    end
+    if test -n "$show_git"
         set -g __fish_git_prompt_show_informative_status yes
         set -g __fish_git_prompt_showdirtystate yes
         set -g __fish_git_prompt_showuntrackedfiles yes
